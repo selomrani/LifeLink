@@ -1,6 +1,7 @@
 let showPassword = document.getElementById('togglePassword');
-let passwordInput = document.getElementById('password');
-showPassword.addEventListener('click', function () {
+let passwordInputs = document.querySelectorAll('pass');
+passwordInputs.forEach(passwordInput => {
+    showPassword.addEventListener('click', function () {
     if (passwordInput.type === 'password') {
         passwordInput.type = 'text';
         icon.classList.replace('bi-eye', 'bi-eye-slash');
@@ -9,6 +10,6 @@ showPassword.addEventListener('click', function () {
         passwordInput.type = 'password';
         icon.classList.replace('bi-eye-slash', 'bi-eye');
     }
+})
+});
 
-}
-)
