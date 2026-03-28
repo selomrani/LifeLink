@@ -23,7 +23,7 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
-        // 'blood_type',
+        'blood_type_id',
         'role_id',
     ];
 
