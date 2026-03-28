@@ -11,17 +11,24 @@ class LoginController extends Controller
     public function __invoke(Request $request)
     {
         $credentials = $request->validate([
-            'email'    => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email'],
             'password' => ['required', 'string'],
         ]);
-        if (Auth::attempt(['email' => $credentials['email'], 'password' => $credentials['password']])) {
-            $request->session()->regenerate();
-            return redirect()->intended('dashboard');
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('lifelink-token')->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Login successful',
+                'user' => $user,
+                'token' => $token,
+            ], 200);
         }
-        else{
-            return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ])->onlyInput('email');
-        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'The provided credentials do not match our records.',
+        ], 401);
     }
 }
