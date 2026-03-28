@@ -13,11 +13,20 @@ class LoginController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
             $token = $user->createToken('login-token')->plainTextToken;
+            if ($user->role->name == 'admin') {
+                return response()->json([
+                    'message' => 'Login successful , Welcome back admin',
+                    'token' => $token,
+                    'user' => $user,
+                    'route' => 'admin',
+                ], 200);
+            }
 
             return response()->json([
                 'message' => 'Login successful',
                 'token' => $token,
                 'user' => $user,
+                'route' => 'user',
             ], 200);
         }
 
