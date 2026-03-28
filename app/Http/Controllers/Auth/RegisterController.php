@@ -14,8 +14,8 @@ class RegisterController extends Controller
     {
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
-        // $role = Role::where('name', 'user')->first();
-        // $validated['role_id'] = $role->id;
+        $role = Role::where('name', 'user')->first();
+        $validated['role_id'] = $role->id;
 
         $user = User::create($validated);
         $token = $user->createToken('lifelink-token')->plainTextToken;
