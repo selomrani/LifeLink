@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
             'lastname' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'unique:users,email'],
             'password' => ['required', 'min:8', 'confirmed'],
-            'blood_type_id' => ['required', 'exists:blood_types,id'], // Ensures the ID is real
+            'role' => ['required', 'string', 'in:donor,recipient'],
         ];
     }
 }

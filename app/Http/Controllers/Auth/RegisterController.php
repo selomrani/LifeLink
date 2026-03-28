@@ -14,7 +14,7 @@ class RegisterController extends Controller
     {
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
-        $role = Role::where('name', 'user')->first();
+        $role = Role::where('name', $request->role)->first();
         $validated['role_id'] = $role->id;
 
         $user = User::create($validated);

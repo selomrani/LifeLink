@@ -12,4 +12,9 @@ class BloodType extends Model
         'can_give_to' => 'array',
         'can_receive_from' => 'array',
     ];
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }
