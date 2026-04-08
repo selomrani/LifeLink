@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -18,3 +19,4 @@ Route::middleware('auth:sanctum')->group(function () {
 Route::get('/test', function () {
     return response()->json(['message' => 'LifeLink API is live!']);
 });
+Route::post('/forgot-password', ForgotPasswordController::class);

@@ -25,7 +25,7 @@ class RegisterRequest extends FormRequest
             'firstname' => ['required', 'string', 'max:50'],
             'lastname' => ['required', 'string', 'max:50'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:8', 'confirmed'],
+            'password' => ['required', 'min:8'],
             'role' => ['required', 'string', 'in:donor,recipient'],
             'blood_type' => ['required', 'string', 'exists:blood_types,name'],
         ];
