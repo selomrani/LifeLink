@@ -8,30 +8,31 @@ use App\Models\BloodType;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
 {
-    public function __invoke(RegisterRequest $request)
+    public function __invoke(RegisterRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        $validated['password'] = Hash::make($validated['password']);
+
         $role = Role::where('name', $request->role)->firstOrFail();
         $bloodType = BloodType::where('name', $request->blood_type)->firstOrFail();
+
         $user = User::create([
-            'firstname' => $validated['firstname'],
-            'lastname' => $validated['lastname'],
-            'email' => $validated['email'],
-            'password' => $validated['password'],
-            'role_id' => $role->id,
+            'firstname'     => $validated['firstname'],
+            'lastname'      => $validated['lastname'],
+            'email'         => $validated['email'],
+            'password'      => Hash::make($validated['password']),
+            'role_id'       => $role->id,
             'blood_type_id' => $bloodType->id,
         ]);
-
-        $token = $user->createToken('lifelink-token')->plainTextToken; //
-
+        Auth::login($user);
         return response()->json([
+            'status'  => 'success',
             'message' => 'Registration successful',
-            'token' => $token,
-            'user' => $user->load(['bloodType', 'role']),
+            'user'    => $user->load(['bloodType', 'role']),
         ], 201);
     }
 }
