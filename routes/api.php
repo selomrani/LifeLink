@@ -17,6 +17,8 @@ Route::post('/login', LoginController::class);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', LogoutController::class);
     Route::get('/profile',[UserProfileController::class,'show']);
+    Route::put('/profile', [UserProfileController::class,'update']);
+    Route::delete('/profile', [UserProfileController::class,'destroy']);
 });
 Route::get('/test', function () {
     return response()->json(['message' => 'LifeLink API is live!']);
