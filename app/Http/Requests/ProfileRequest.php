@@ -26,7 +26,7 @@ class ProfileRequest extends FormRequest
             'lastname' => 'sometimes|string',
             'email' => 'sometimes|email',
             'password' => 'sometimes|string',
-            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
