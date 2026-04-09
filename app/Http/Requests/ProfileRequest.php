@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Auth;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'firstname' => ['required', 'string', 'max:50'],
-            'lastname' => ['required', 'string', 'max:50'],
-            'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:8'],
-            'role' => ['required', 'string', 'in:donor,recipient'],
-            'blood_type' => ['required', 'string', 'exists:blood_types,name'],
+            'firstname' => 'sometimes|string',
+            'lastname' => 'sometimes|string',
+            'email' => 'sometimes|email',
+            'password' => 'sometimes|string',
+            'photo' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 }
