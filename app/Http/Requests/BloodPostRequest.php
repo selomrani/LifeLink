@@ -11,7 +11,7 @@ class BloodPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class BloodPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'blood_type_id' => 'required|string',
+            'description' => 'required|string',
+            'location' => 'required|string',
+            'needed_by' => 'required|date',
         ];
     }
 }
