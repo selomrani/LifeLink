@@ -5,12 +5,13 @@ namespace App\Http\Controllers\Feed;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodPostRequest;
 use App\Models\BloodREquestPost;
+use Illuminate\Support\Facades\Auth;
 
 class BloodRequestController extends Controller
 {
     public function index()
     {
-        $allbloodrequests = BloodREquestPost::with('comments')->get();
+        $allbloodrequests = BloodREquestPost::with('comments')->with('user')->get();
 
         return response()->json([
             'status' => 'success',
@@ -32,7 +33,7 @@ class BloodRequestController extends Controller
     public function store(BloodREquestPost $request)
     {
         $validated = $request->validated();
-
+        $validated['user_id'] = Auth::id();
         $bloodrequest = BloodREquestPost::create($validated);
 
         return response()->json([
