@@ -18,6 +18,13 @@ class BloodREquestPost extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class, 'post_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    protected $table = 'blood_request_posts';
 }
