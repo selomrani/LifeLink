@@ -2,10 +2,14 @@
 
 namespace App\Models;
 
+// use Database\Factories\BloodREquestPostFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class BloodREquestPost extends Model
+class BloodRequestPost extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'blood_type',
         'description',
@@ -27,4 +31,9 @@ class BloodREquestPost extends Model
     }
 
     protected $table = 'blood_request_posts';
+
+    // protected static function newFactory()
+    // {
+    //     return BloodREquestPostFactory::new();
+    // }
 }
