@@ -4,37 +4,43 @@ namespace App\Http\Controllers\Feed;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodPostRequest;
-use App\Models\BloodREquestPost;
+use App\Models\BloodRequestPost;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BloodRequestController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $allbloodrequests = BloodREquestPost::with('comments')->with('user')->get();
+        $user = $request->user();
+        $canGiveTo = $user->bloodType->can_give_to;
+        $posts = BloodRequestPost::whereIn('blood_type', $canGiveTo)
+            ->with([
+                'user',
+                'comments.user',
+            ])
+            ->latest()
+            ->get();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $allbloodrequests,
-            'message' => 'All Blood Requests',
-        ]);
+        return response()->json($posts);
     }
 
-    public function show(BloodREquestPost $bloodrequest)
+    public function show(BloodRequestPost $bloodrequest)
     {
         return response()->json([
             'status' => 'success',
             'data' => $bloodrequest,
             'message' => 'Blood Request',
             'comments' => $bloodrequest->comments,
+            'user' => $bloodrequest->user,
         ]);
     }
 
-    public function store(BloodREquestPost $request)
+    public function store(BloodRequestPost $request)
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
-        $bloodrequest = BloodREquestPost::create($validated);
+        $bloodrequest = BloodRequestPost::create($validated);
 
         return response()->json([
             'status' => 'success',
@@ -43,7 +49,7 @@ class BloodRequestController extends Controller
         ]);
     }
 
-    public function destroy(BloodREquestPost $bloodrequest)
+    public function destroy(BloodRequestPost $bloodrequest)
     {
         $bloodrequest->delete();
 
@@ -53,7 +59,7 @@ class BloodRequestController extends Controller
         ]);
     }
 
-    public function update(BloodREquestPost $bloodrequest, BloodPostRequest $request)
+    public function update(BloodRequestPost $bloodrequest, BloodPostRequest $request)
     {
         $validated = $request->validated();
 

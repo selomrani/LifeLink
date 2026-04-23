@@ -57,7 +57,7 @@ class User extends Authenticatable
                 return Storage::disk('s3')->url($this->profile_photo_path);
             }
 
-            $fullName = trim($this->firstname . ' ' . $this->lastname);
+            $fullName = trim($this->firstname.' '.$this->lastname);
             $query = urlencode($fullName ?: $this->email);
 
             return "https://ui-avatars.com/api/?name={$query}&color=7F9CF5&background=EBF4FF";

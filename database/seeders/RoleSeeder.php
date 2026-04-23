@@ -18,10 +18,6 @@ class RoleSeeder extends Seeder
                 'name' => 'donor',
                 'description' => 'User who provides blood donations.',
             ],
-            [
-                'name' => 'recipient',
-                'description' => 'User who requests blood donations.',
-            ],
         ];
 
         foreach ($roles as $role) {

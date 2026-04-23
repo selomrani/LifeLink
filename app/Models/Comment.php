@@ -10,6 +10,11 @@ class Comment extends Model
 
     public function post()
     {
-        return $this->belongsTo(BloodREquestPost::class, 'post_id');
+        return $this->belongsTo(BloodRequestPost::class, 'post_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
