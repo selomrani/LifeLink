@@ -27,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/profile', [UserProfileController::class, 'destroy']);
     Route::post('/feed', [BloodRequestController::class, 'store']);
     Route::get('/feed', [BloodRequestController::class, 'index']);
-    Route::get('/feed/{id}', [BloodRequestController::class, 'show']);
+    Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
     Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
     Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
 });
