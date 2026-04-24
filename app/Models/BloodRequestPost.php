@@ -36,4 +36,8 @@ class BloodRequestPost extends Model
     // {
     //     return BloodREquestPostFactory::new();
     // }
+    public function donations()
+    {
+        return $this->hasMany(MonetaryDonation::class);
+    }
 }
