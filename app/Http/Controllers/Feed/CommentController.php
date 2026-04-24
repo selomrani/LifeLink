@@ -8,10 +8,11 @@ use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
-    public function create(BloodPostRequest $request)
+    public function create(BloodPostRequest $request, $postId)
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
+        $validated['post_id'] = $postId; // from route parameter
         $comment = Comment::create($validated);
 
         return response()->json([

@@ -29,13 +29,6 @@ class RegisterController extends Controller
             'blood_type_id' => $bloodType->id,
         ]);
 
-        $fullName = trim($user->firstname . ' ' . $user->lastname);
-        $name = urlencode($fullName ?: $user->email);
-
-        $user->update([
-            'profile_photo_path' => "https://ui-avatars.com/api/?name={$name}&color=7F9CF5&background=EBF4FF"
-        ]);
-
         return response()->json([
             'status' => 'success',
             'message' => 'Registration successful',

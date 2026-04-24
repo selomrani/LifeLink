@@ -54,12 +54,13 @@ class User extends Authenticatable
     {
         return Attribute::get(function () {
             if ($this->profile_photo_path) {
+                if (str_starts_with($this->profile_photo_path, 'https://')) {
+                    return $this->profile_photo_path;
+                }
                 return 'https://' . env('AWS_BUCKET') . '.s3.' . env('AWS_DEFAULT_REGION') . '.amazonaws.com/' . $this->profile_photo_path;
             }
-
             $fullName = trim($this->firstname . ' ' . $this->lastname);
             $name = urlencode($fullName ?: $this->email);
-
             return "https://ui-avatars.com/api/?name={$name}&color=7F9CF5&background=EBF4FF";
         });
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\BloodTypeController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Feed\BloodRequestController;
 use App\Http\Controllers\Profile\UserProfileController;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
     Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
     Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
+    Route::post('/feed/{bloodrequest}/comment', [CommentController::class, 'comment']);
 });
 Route::get('/test', function () {
     return response()->json(['message' => 'LifeLink API is live!']);
