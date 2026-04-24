@@ -6,36 +6,48 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\BloodTypeController;
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\Feed\BloodRequestController;
+use App\Http\Controllers\Feed\CommentController; // This is the correct Feed version
 use App\Http\Controllers\Profile\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
-Route::post('/register', RegisterController::class);
-Route::post('/login', LoginController::class);
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/logout', LogoutController::class);
-    Route::get('/profile', [UserProfileController::class, 'show']);
-    Route::put('/profile', [UserProfileController::class, 'update']);
-    Route::delete('/profile', [UserProfileController::class, 'destroy']);
-    Route::get('/profile', [UserProfileController::class, 'show']);
-    Route::put('/profile', [UserProfileController::class, 'update']);
-    Route::delete('/profile', [UserProfileController::class, 'destroy']);
-    Route::post('/feed', [BloodRequestController::class, 'store']);
-    Route::get('/feed', [BloodRequestController::class, 'index']);
-    Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
-    Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
-    Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
-    Route::post('/feed/{bloodrequest}/comment', [CommentController::class, 'comment']);
-});
 Route::get('/test', function () {
     return response()->json(['message' => 'LifeLink API is live!']);
 });
-Route::get('/bloodtypes', [BloodTypeController::class, 'index']);
+
+
+Route::post('/register', RegisterController::class);
+Route::post('/login', LoginController::class);
 Route::post('/forgot-password', ForgotPasswordController::class);
 Route::post('/reset-password', ResetPasswordController::class);
+
+Route::get('/bloodtypes', [BloodTypeController::class, 'index']);
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
+    Route::post('/logout', LogoutController::class);
+
+
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [UserProfileController::class, 'show']);
+        Route::put('/', [UserProfileController::class, 'update']);
+        Route::delete('/', [UserProfileController::class, 'destroy']);
+    });
+
+
+    Route::get('/feed', [BloodRequestController::class, 'index']);
+    Route::post('/feed', [BloodRequestController::class, 'store']);
+    Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
+    Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
+    Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
+
+    Route::post('/feed/{post}/comment', [CommentController::class, 'create']);
+    Route::post('/feed/{bloodrequest}/donate', [BloodRequestController::class, 'donate']);
+});
