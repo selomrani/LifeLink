@@ -38,6 +38,6 @@ class BloodRequestPost extends Model
     // }
     public function donations()
     {
-        return $this->hasMany(MonetaryDonation::class);
+        return $this->hasMany(MonetaryDonation::class, 'post_id');
     }
 }

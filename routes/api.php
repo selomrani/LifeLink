@@ -6,12 +6,13 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\BloodTypeController;
+use App\Http\Controllers\Donations\StripeController;
 use App\Http\Controllers\Feed\BloodRequestController;
 use App\Http\Controllers\Feed\CommentController; // This is the correct Feed version
 use App\Http\Controllers\Profile\UserProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use Stripe\Stripe;
 
 Route::get('/test', function () {
     return response()->json(['message' => 'LifeLink API is live!']);
@@ -49,5 +50,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
 
     Route::post('/feed/{post}/comment', [CommentController::class, 'create']);
-    Route::post('/feed/{bloodrequest}/donate', [BloodRequestController::class, 'donate']);
+    Route::post('/feed/{bloodrequest}/donate', [StripeController::class, 'donate']);
 });

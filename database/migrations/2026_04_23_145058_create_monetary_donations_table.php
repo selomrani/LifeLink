@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('monetary_donations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('post_id')->nullable()->constrained('blood_request_posts')->nullOnDelete();
+            $table->decimal('amount');
             $table->timestamps();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-            $table->amount('amount');
-            $table->foreign('post_id')->references('id')->on('blood_request_posts')->onDelete('set null');
         });
     }
 
