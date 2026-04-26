@@ -7,9 +7,11 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\BloodTypeController;
 use App\Http\Controllers\Donations\StripeController;
+use App\Http\Controllers\DonationsController;
 use App\Http\Controllers\Feed\BloodRequestController;
 use App\Http\Controllers\Feed\CommentController; // This is the correct Feed version
 use App\Http\Controllers\Profile\UserProfileController;
+use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Stripe\Stripe;
@@ -51,4 +53,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/feed/{post}/comment', [CommentController::class, 'create']);
     Route::post('/feed/{bloodrequest}/donate', [StripeController::class, 'donate']);
+
+
+    // donations
+
+    Route::post('/feed/{post}/donate', [DonationsController::class, 'offerDonation']);
+    Route::put('feed/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('feed/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
+    Route::get('/donations', [DonationsController::class, 'myDonations']);
+    Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
+    Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
 });
+
+Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

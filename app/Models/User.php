@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Donation;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
@@ -63,5 +65,13 @@ class User extends Authenticatable
             $name = urlencode($fullName ?: $this->email);
             return "https://ui-avatars.com/api/?name={$name}&color=7F9CF5&background=EBF4FF";
         });
+    }
+    public function donations()
+    {
+        return $this->hasMany(Donation::class, 'donor_id');
+    }
+    public function bloodRequestPosts()
+    {
+        return $this->hasMany(BloodRequestPost::class);
     }
 }
