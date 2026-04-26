@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('monetary_donations', function (Blueprint $table) {
+        Schema::create('donations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
-            $table->foreignId('post_id')->nullable()->constrained('blood_request_posts')->nullOnDelete();
-            $table->decimal('amount');
             $table->timestamps();
+            $table->foreignId('donor_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('blood_request_post_id')->constrained('blood_request_posts')->onDelete('cascade');
+            $table->enum('status',['pending','accepted','rejected'])->default('pending');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('monetary_donations');
+        Schema::dropIfExists('donations');
     }
 };
