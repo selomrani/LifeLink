@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodPostRequest;
 use App\Http\Requests\FeedRequest;
 use App\Models\BloodRequestPost;
+use App\Models\BloodType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BloodRequestController extends Controller
 {
@@ -40,10 +42,19 @@ class BloodRequestController extends Controller
             ]);
         }
     }
-    public function store(BloodRequestPost $request)
+    public function store(BloodPostRequest $request)
     {
         $validated = $request->validated();
         $validated['user_id'] = Auth::id();
+
+        $bloodtype = BloodType::find($validated['blood_type_id']);
+        $validated['blood_type'] = $bloodtype->name;
+
+        if ($request->hasFile('media_path')) {
+            $path = $request->file('media_path')->store('posts_media', 's3');
+            $validated['media_path'] = Storage::disk('s3')->url($path);
+        }
+
         $bloodrequest = BloodRequestPost::create($validated);
 
         return response()->json([
@@ -52,11 +63,9 @@ class BloodRequestController extends Controller
             'message' => 'Blood Request created successfully',
         ]);
     }
-
     public function destroy(BloodRequestPost $bloodrequest)
     {
         $bloodrequest->delete();
-
         return response()->json([
             'status' => 'success',
             'message' => 'Blood Request deleted successfully',

@@ -26,6 +26,7 @@ class BloodPostRequest extends FormRequest
             'description' => 'required|string',
             'location' => 'required|string',
             'needed_by' => 'required|date',
+            'media_path'    => 'nullable|image|max:5120',
         ];
     }
 }
