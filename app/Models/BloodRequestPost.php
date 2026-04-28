@@ -25,10 +25,6 @@ class BloodRequestPost extends Model
         return $this->hasMany(Comment::class, 'post_id');
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
 
     protected $table = 'blood_request_posts';
 
@@ -36,4 +32,15 @@ class BloodRequestPost extends Model
     // {
     //     return BloodREquestPostFactory::new();
     // }
+// The person who wrote the post
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // All the users who volunteered to donate to this post
+    public function donations()
+    {
+        return $this->hasMany(Donation::class);
+    }
 }
