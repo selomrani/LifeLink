@@ -12,7 +12,12 @@ class UserProfileController extends Controller
 {
     public function show(Request $request)
     {
-        return $request->user();
+        $user = $request->user();
+            $user->load('bloodRequestPosts');
+        return response()->json([
+            'status' => 'success',
+            'user' => $user,
+        ], 200);
     }
 public function update(ProfileRequest $request)
 {
@@ -27,7 +32,6 @@ public function update(ProfileRequest $request)
     }
 
     $user->save();
-
     return response()->json([
         'status' => 'success',
         'message' => 'Profile updated successfully',

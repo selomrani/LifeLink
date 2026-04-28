@@ -57,10 +57,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // donations
 
-    Route::post('/feed/{post}/donate', [DonationsController::class, 'offerDonation']);
-    Route::put('feed/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
-    Route::put('feed/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
-    Route::get('/donations', [DonationsController::class, 'myDonations']);
+    Route::post('/post/{post}/donate', [DonationsController::class, 'offerDonation']);
+    Route::put('/post/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('/post/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
+    Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
 });

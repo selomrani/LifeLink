@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Feed;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BloodPostRequest;
+use App\Http\Requests\FeedRequest;
 use App\Models\BloodRequestPost;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,29 +14,32 @@ class BloodRequestController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        $canGiveTo = $user->bloodType->can_give_to;
-        $posts = BloodRequestPost::whereIn('blood_type', $canGiveTo)
-            ->with([
-                'user',
-                'comments.user',
-            ])
-            ->latest()
-            ->get();
 
-        return response()->json($posts);
+        $isCompatibleOnly = $request->boolean('compatible');
+
+        if ($isCompatibleOnly) {
+            $canGiveTo = $user->bloodType->can_give_to;
+
+            $posts = BloodRequestPost::whereIn('blood_type', $canGiveTo)
+                ->with(['user', 'comments'])
+                ->latest()
+                ->get();
+
+            return response()->json([
+                'message' => 'Showing compatible posts only',
+                'data' => $posts
+            ]);
+        } else {
+
+            $posts = BloodRequestPost::with(['user', 'comments'])
+                ->latest()
+                ->get();
+            return response()->json([
+                'message' => 'Showing all posts',
+                'data' => $posts
+            ]);
+        }
     }
-
-    public function show(BloodRequestPost $bloodrequest)
-    {
-        return response()->json([
-            'status' => 'success',
-            'data' => $bloodrequest,
-            'message' => 'Blood Request',
-            'comments' => $bloodrequest->comments,
-            'user' => $bloodrequest->user,
-        ]);
-    }
-
     public function store(BloodRequestPost $request)
     {
         $validated = $request->validated();
