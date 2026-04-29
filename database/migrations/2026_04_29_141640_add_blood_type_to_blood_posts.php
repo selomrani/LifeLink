@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blood_request_posts', function (Blueprint $table) {
-            $table->dropColumn('blood_type');
-            $table->foreignId('blood_type_id')->constrained('blood_types');
+            $table->string('blood_type');
         });
     }
 
@@ -23,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('blood_request_posts', function (Blueprint $table) {
-
+            $table->dropColumn('blood_type');
         });
     }
 };

@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfileRequest;
+use App\Http\Requests\ReportRequest;
+use App\Models\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class UserProfileController extends Controller
 {
@@ -46,5 +50,16 @@ class UserProfileController extends Controller
             'status' => 'success',
             'message' => 'Profile deleted successfully',
         ], 200);
+    }
+    public function report(ReportRequest $request , User $user)
+    {
+        $validated = $request->validated();
+        $validated['reporter_id'] = Auth::id();
+        $validated['reported_user_id'] = $user->id;
+        $report = Report::create($validated);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'user was reported successfully and sent to admin for revision'
+        ]);
     }
 }

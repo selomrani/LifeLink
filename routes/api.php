@@ -63,6 +63,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
+
+    // report
+    Route::post('/users/{user}/report',[UserProfileController::class,'report']);
 });
 
 Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

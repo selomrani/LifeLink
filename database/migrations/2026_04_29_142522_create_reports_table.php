@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('blood_request_posts', function (Blueprint $table) {
-            $table->dropColumn('blood_type');
-            $table->foreignId('blood_type_id')->constrained('blood_types');
+        Schema::create('reports', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
         });
     }
 
@@ -22,8 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('blood_request_posts', function (Blueprint $table) {
-
-        });
+        Schema::dropIfExists('reports');
     }
 };
