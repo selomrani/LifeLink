@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -66,6 +67,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // report
     Route::post('/users/{user}/report',[UserProfileController::class,'report']);
+
+    // Admin actions
+
+    Route::get('statistics',[AdminController::class,'statistics']);
+    Route::get('users',[AdminController::class,'fetchUsers']);
+    Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 
 Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

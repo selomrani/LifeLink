@@ -11,31 +11,26 @@ class LoginController extends Controller
 {
     public function __invoke(LoginRequest $request): JsonResponse
     {
-
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
+
+            if (!$user->is_active) {
+                Auth::logout();
+                return response()->json([
+                    'message' => 'Your account has been banned.',
+                ], 403);
+            }
+
             $user->load('role');
             $token = $user->createToken('access_token')->plainTextToken;
-
             $isAdmin = $user->role->name === 'admin';
-            $cookie = cookie(
-                'token',
-                $token,
-                60,
-                '/',
-                null,
-                false,
-                true,
-                false,
-                'Lax'
-            );
 
             return response()->json([
                 'message' => $isAdmin ? 'Welcome back admin' : 'Login successful',
                 'user' => $user,
                 'token' => $token,
                 'route' => $isAdmin ? 'admin' : 'user',
-            ], 200)->withCookie($cookie);
+            ], 200);
         }
 
         return response()->json([
