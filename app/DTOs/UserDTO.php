@@ -14,6 +14,7 @@ readonly class UserDTO
         public ?string $bloodType,
         public ?string $role,
         public string $joinedAt,
+        public bool $isActive,
     ) {}
 
     public static function fromModel(User $user): self
@@ -26,6 +27,7 @@ readonly class UserDTO
             bloodType: $user->bloodType?->name,
             role: $user->role?->name,
             joinedAt: $user->created_at->format('M d, Y'),
+            isActive: (bool) $user->is_active,
         );
     }
 }

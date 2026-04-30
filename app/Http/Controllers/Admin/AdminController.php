@@ -32,6 +32,17 @@ class AdminController extends Controller
             'reports'    => $reportsCount,
         ]);
     }
+    public function fetchReports()
+    {
+        $reports = Report::where('status','pending')->with(['reporter', 'reportedUser'])
+            ->latest()
+            ->get();
+
+        return response()->json([
+            'data' => $reports
+        ]);
+    }
+
     public function fetchUsers()
     {
         $users = User::with('bloodRequestPosts','role')->get();
