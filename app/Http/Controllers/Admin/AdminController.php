@@ -39,6 +39,17 @@ class AdminController extends Controller
             'data' => $cleanUsers
         ]);
     }
+    public function ban(User $user)
+    {
+        $user->is_active = false;
+        $user->save();
+
+        return response()->json([
+            'message' => 'User banned successfully',
+            'banned_user_id' => $user->id,
+        ]);
+    }
+
     public function review(Report $report)
     {
         $report->load(['reporter', 'reportedUser']);

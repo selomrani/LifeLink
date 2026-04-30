@@ -8,8 +8,10 @@ use App\Models\BloodType;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use App\Mail\WelcomeMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class RegisterController extends Controller
 {
@@ -28,6 +30,8 @@ class RegisterController extends Controller
             'role_id' => $role->id,
             'blood_type_id' => $bloodType->id,
         ]);
+
+        Mail::to($user->email)->send(new WelcomeMail($user->load('bloodType')));
 
         return response()->json([
             'status' => 'success',

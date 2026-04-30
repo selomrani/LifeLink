@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('statistics',[AdminController::class,'statistics']);
     Route::get('users',[AdminController::class,'fetchUsers']);
+    Route::put('users/{user}/ban',[AdminController::class,'ban']);
     Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 
