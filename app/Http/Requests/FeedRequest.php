@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class DonationRequest extends FormRequest
+class FeedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,7 @@ class DonationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            // 'donor_id' => 'required|exists:users,id',
-            // 'blood_request_post_id' => 'required|exists:blood_request_posts,id',
+            'compatible' => 'boolean|required'
         ];
     }
 }

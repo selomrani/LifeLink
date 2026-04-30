@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -57,12 +58,23 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // donations
 
-    Route::post('/feed/{post}/donate', [DonationsController::class, 'offerDonation']);
-    Route::put('feed/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
-    Route::put('feed/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
-    Route::get('/donations', [DonationsController::class, 'myDonations']);
+    Route::post('/post/{post}/donate', [DonationsController::class, 'offerDonation']);
+    Route::put('/post/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('/post/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
+    Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
+
+    // report
+    Route::post('/users/{user}/report',[UserProfileController::class,'report']);
+
+    // Admin actions
+
+    Route::get('statistics',[AdminController::class,'statistics']);
+    Route::get('users',[AdminController::class,'fetchUsers']);
+    Route::put('users/{user}/ban',[AdminController::class,'ban']);
+    Route::put('users/{user}/toggle-ban',[AdminController::class,'toggleBan']);
+    Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 
 Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

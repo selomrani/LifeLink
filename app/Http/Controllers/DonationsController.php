@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DonationRequest;
+use App\Models\BloodRequestPost;
 use App\Models\Donation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,11 +15,20 @@ class DonationsController extends Controller
         $donations = Donation::where('donor_id', Auth::id())->get();
         return response()->json($donations);
     }
-    public function offerDonation(DonationRequest $request)
-    {
-        $donation = Donation::create($request->all());
-        return response()->json($donation);
-    }
+public function offerDonation(DonationRequest $request, BloodRequestPost $post)
+{
+    $validated = $request->validated();
+    $validated['donor_id'] = Auth::id();
+    $validated['blood_request_post_id'] = $post->id;
+
+    $donation = Donation::create($validated);
+
+    return response()->json([
+        'status' => 'success',
+        'data' => $donation,
+        'message' => 'Donation created successfully',
+    ]);
+}
     public function deleteDonation(Donation $donation)
     {
         $donation->delete();
@@ -52,8 +62,11 @@ class DonationsController extends Controller
             'donation' => $donation]
         );
     }
-    public function postDonationsIndex(Donation $donation){
-        $donations = Donation::where('blood_request_post_id', $donation->id)->where('status', 'pending')->get();
+    public function postDonationsIndex(BloodRequestPost $post){
+        $donations = Donation::with('donor')
+    ->where('blood_request_post_id', $post->id)
+    ->where('status', 'pending')
+    ->get();
         return response()->json($donations);
     }
 }
