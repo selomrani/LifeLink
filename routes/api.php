@@ -73,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('statistics',[AdminController::class,'statistics']);
     Route::get('users',[AdminController::class,'fetchUsers']);
     Route::put('users/{user}/ban',[AdminController::class,'ban']);
+    Route::put('users/{user}/toggle-ban',[AdminController::class,'toggleBan']);
     Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 

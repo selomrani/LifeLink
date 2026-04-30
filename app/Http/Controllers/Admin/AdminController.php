@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\DTOs\UserDTO;
 use App\Mail\BannedMail;
+use App\Mail\UnbannedMail;
 use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
@@ -50,6 +51,21 @@ class AdminController extends Controller
             'message' => 'User banned successfully',
             'banned_user_id' => $user->id,
         ]);
+    }
+
+    public function toggleBan(User $user)
+    {
+        if ($user->is_active) {
+            $user->is_active = false;
+            $user->save();
+            Mail::to($user->email)->send(new BannedMail($user));
+            return response()->json(['message' => 'User banned successfully', 'is_active' => false]);
+        }
+
+        $user->is_active = true;
+        $user->save();
+        Mail::to($user->email)->send(new UnbannedMail($user));
+        return response()->json(['message' => 'User unbanned successfully', 'is_active' => true]);
     }
 
     public function review(Report $report)
