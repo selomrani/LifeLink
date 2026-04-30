@@ -63,6 +63,16 @@ class BloodRequestController extends Controller
             'message' => 'Blood Request created successfully',
         ]);
     }
+    public function show(BloodRequestPost $bloodrequest)
+    {
+        $bloodrequest->load(['user', 'comments.user']);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $bloodrequest,
+        ]);
+    }
+
     public function destroy(BloodRequestPost $bloodrequest)
     {
         $bloodrequest->delete();
