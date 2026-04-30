@@ -10,6 +10,8 @@ use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\DTOs\UserDTO;
+use App\Mail\BannedMail;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -58,6 +60,9 @@ class AdminController extends Controller
         $report->reportedUser->save();
         $report->status = 'resolved';
         $report->save();
+
+        Mail::to($report->reportedUser->email)->send(new BannedMail($report->reportedUser));
+
         return response()->json([
             'message' => 'User banned successfully',
             'report_id' => $report->id,
