@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/', [UserProfileController::class, 'update']);
         Route::delete('/', [UserProfileController::class, 'destroy']);
     });
-
+    Route::get('/users/{user}', [UserProfileController::class, 'viewPublicProfile']);
     Route::get('/profile/posts', [UserProfileController::class, 'userPosts']);
 
     Route::get('/feed', [BloodRequestController::class, 'index']);

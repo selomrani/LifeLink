@@ -71,4 +71,13 @@ class UserProfileController extends Controller
             'posts' => $posts
         ]);
     }
+    // In App\Http\Controllers\UserController.php
+    public function viewPublicProfile(User $user)
+    {
+        $user->load('bloodRequestPosts');
+        return response()->json([
+            'status' => 'success',
+            'user' => $user
+        ]);
+    }
 }
