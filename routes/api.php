@@ -45,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/', [UserProfileController::class, 'destroy']);
     });
 
+    Route::get('/profile/posts', [UserProfileController::class, 'userPosts']);
 
     Route::get('/feed', [BloodRequestController::class, 'index']);
     Route::post('/feed', [BloodRequestController::class, 'store']);
@@ -58,13 +59,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // donations
 
+// donations
     Route::post('/post/{post}/donate', [DonationsController::class, 'offerDonation']);
-    Route::put('/post/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
-    Route::put('/post/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
+    Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);
     Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
+    Route::put('/donations/{donation}/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('/donations/{donation}/reject', [DonationsController::class, 'rejectDonation']);
 
+    Route::put('/donations/{donation}/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('/donations/{donation}/reject', [DonationsController::class, 'rejectDonation']);
     // report
     Route::post('/users/{user}/report',[UserProfileController::class,'report']);
 
@@ -77,4 +82,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 
-Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

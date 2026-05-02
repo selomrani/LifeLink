@@ -62,4 +62,13 @@ class UserProfileController extends Controller
             'message' => 'user was reported successfully and sent to admin for revision'
         ]);
     }
+    public function userPosts(Request $request)
+    {
+        $user = $request->user();
+        $posts = $user->bloodRequestPosts()->with('user')->get();
+        return response()->json([
+            'status' => 'success',
+            'posts' => $posts
+        ]);
+    }
 }
