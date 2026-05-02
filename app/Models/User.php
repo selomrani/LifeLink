@@ -76,4 +76,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(BloodRequestPost::class);
     }
+    public function medicalCoolDown(){
+        $lastDonation = $this->donations()->where('status', 'accepted')->latest()->first();
+        if ($lastDonation) {
+            return $lastDonation->created_at->addDays(56);
+        }
+        return null;
+    }
 }

@@ -17,10 +17,16 @@ class DonationsController extends Controller
     }
 public function offerDonation(DonationRequest $request, BloodRequestPost $post)
 {
+    $user = Auth::user();
+    if($user->medicalCoolDown() > now()){
+        return response()->json([
+            'status' => 'error',
+            'message' => 'You can only make one donation every 56 days',
+        ], 422);
+    }
     $validated = $request->validated();
     $validated['donor_id'] = Auth::id();
     $validated['blood_request_post_id'] = $post->id;
-
     $donation = Donation::create($validated);
 
     return response()->json([
