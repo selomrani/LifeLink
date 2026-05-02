@@ -96,4 +96,12 @@ class AdminController extends Controller
             'banned_user_id' => $report->reported_user_id,
         ]);
     }
+    public function dismissReport(Report $report)
+    {
+        $report->status = 'dismissed';
+        $report->save();
+        return response()->json([
+            'message' => 'Report dismissed successfully',
+        ]);
+    }
 }

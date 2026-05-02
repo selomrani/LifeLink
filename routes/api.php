@@ -31,7 +31,6 @@ Route::get('/bloodtypes', [BloodTypeController::class, 'index']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
@@ -76,6 +75,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('users/{user}/ban',[AdminController::class,'ban']);
     Route::put('users/{user}/toggle-ban',[AdminController::class,'toggleBan']);
     Route::put('reports/{report}/review',[AdminController::class,'review']);
+    Route::put('reports/{report}/dismiss',[AdminController::class,'dismissReport']);
 });
 
 Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);
