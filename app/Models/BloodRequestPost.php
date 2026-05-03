@@ -11,7 +11,7 @@ class BloodRequestPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'blood_type',
+        'blood_type_id',
         'description',
         'location',
         'needed_by',

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('blood_request_posts', function (Blueprint $table) {
-            $table->string('blood_type');
+            $table->string('blood_type')->nullable();
         });
     }
 
