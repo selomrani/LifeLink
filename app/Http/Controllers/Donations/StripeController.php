@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Donations;
 
 use App\Http\Controllers\Controller;
 use App\Models\BloodRequestPost;
+use App\Models\MonetaryDonation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Stripe\StripeClient;
@@ -39,18 +40,16 @@ class StripeController extends Controller
                 ],
             ]);
 
-            // 4. Save the record to your local database
-            // We use the relationship to ensure post_id is set correctly
-            $donation = $bloodrequest->donations()->create([
-                'amount'  => $validated['amount'],
+            // 4. Save the monetary donation record
+            MonetaryDonation::create([
                 'user_id' => Auth::id(),
-                // 'post_id' is automatically handled by the relationship helper
+                'amount'  => $validated['amount'],
+                'post_id' => $bloodrequest->id,
             ]);
 
             // 5. Return the client_secret to Vue
             return response()->json([
                 'client_secret' => $paymentIntent->client_secret,
-                'donation'      => $donation,
                 'status'        => 'success',
                 'message'       => 'Payment intent created successfully',
             ]);

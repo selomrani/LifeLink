@@ -10,7 +10,7 @@ class Donation extends Model
     protected $fillable = [
         'donor_id',
         'blood_request_post_id',
-        'status'
+        'status',
     ];
 
 

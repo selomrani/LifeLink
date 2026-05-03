@@ -14,6 +14,7 @@ use App\Http\Controllers\Feed\CommentController; // This is the correct Feed ver
 use App\Http\Controllers\Profile\UserProfileController;
 use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Stripe\Stripe;
 
@@ -29,6 +30,13 @@ Route::post('/reset-password', ResetPasswordController::class);
 
 Route::get('/bloodtypes', [BloodTypeController::class, 'index']);
 
+Route::post('/chat', function (Request $request) {
+    $response = Http::withHeaders([
+        'X-Instance-Id' => env('N8N_INSTANCE_ID', 'eb4c3eff25260772290dd9dba208402d6cdf318abf70f3ed6bbcd0b28f503571'),
+    ])->post(env('N8N_CHAT_URL', 'http://44.211.166.212:5678/webhook/5bda5947-a4b4-4ae9-a097-5b42279422e6/chat'), $request->all());
+
+    return $response->json();
+});
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -50,10 +58,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/feed', [BloodRequestController::class, 'index']);
     Route::post('/feed', [BloodRequestController::class, 'store']);
     Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
-    Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
-    Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
+    Route::put('/feed/{bloodrequest}', [BloodRequestController::class, 'update']);
+    Route::delete('/feed/{bloodrequest}', [BloodRequestController::class, 'destroy']);
+    Route::put('/feed/{bloodrequest}/close', [BloodRequestController::class, 'close']);
 
     Route::post('/feed/{post}/comment', [CommentController::class, 'create']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::post('/feed/{bloodrequest}/donate', [StripeController::class, 'donate']);
 
 
@@ -65,9 +75,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
-    Route::put('/donations/{donation}/accept', [DonationsController::class, 'acceptDonation']);
-    Route::put('/donations/{donation}/reject', [DonationsController::class, 'rejectDonation']);
-
     Route::put('/donations/{donation}/accept', [DonationsController::class, 'acceptDonation']);
     Route::put('/donations/{donation}/reject', [DonationsController::class, 'rejectDonation']);
     // report

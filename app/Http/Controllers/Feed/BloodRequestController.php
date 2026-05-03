@@ -22,7 +22,8 @@ class BloodRequestController extends Controller
         if ($isCompatibleOnly) {
             $canGiveTo = $user->bloodType->can_give_to;
 
-            $posts = BloodRequestPost::whereIn('blood_type', $canGiveTo)
+            $posts = BloodRequestPost::where('status', '!=', 'completed')
+                ->whereIn('blood_type', $canGiveTo)
                 ->with(['user', 'comments'])
                 ->latest()
                 ->get();
@@ -33,7 +34,8 @@ class BloodRequestController extends Controller
             ]);
         } else {
 
-            $posts = BloodRequestPost::with(['user', 'comments'])
+            $posts = BloodRequestPost::where('status', '!=', 'completed')
+                ->with(['user', 'comments'])
                 ->latest()
                 ->get();
             return response()->json([
@@ -92,6 +94,17 @@ class BloodRequestController extends Controller
             'status' => 'success',
             'data' => $bloodrequest,
             'message' => 'Blood Request updated successfully',
+        ]);
+    }
+
+    public function close(BloodRequestPost $bloodrequest)
+    {
+        $bloodrequest->update(['status' => 'completed']);
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $bloodrequest,
+            'message' => 'Blood Request marked as completed',
         ]);
     }
 }
