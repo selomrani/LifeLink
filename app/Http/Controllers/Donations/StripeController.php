@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Donations;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MonetaryDonationConfirmationMail;
+use App\Mail\MonetaryDonationReceivedMail;
 use App\Models\BloodRequestPost;
 use App\Models\MonetaryDonation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
 
 class StripeController extends Controller
 {
     /**
      * Handle the donation process.
-     * * @param Request $request
-     * @param BloodRequestPost $bloodrequest
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     public function donate(Request $request, BloodRequestPost $bloodrequest)
@@ -41,23 +43,28 @@ class StripeController extends Controller
             ]);
 
             // 4. Save the monetary donation record
-            MonetaryDonation::create([
+            $monetaryDonation = MonetaryDonation::create([
                 'user_id' => Auth::id(),
-                'amount'  => $validated['amount'],
+                'amount' => $validated['amount'],
                 'post_id' => $bloodrequest->id,
             ]);
+
+            $bloodrequest->load('user');
+            $donor = Auth::user();
+            Mail::to($donor->email)->send(new MonetaryDonationConfirmationMail($donor, $monetaryDonation));
+            Mail::to($bloodrequest->user->email)->send(new MonetaryDonationReceivedMail($bloodrequest->user, $monetaryDonation));
 
             // 5. Return the client_secret to Vue
             return response()->json([
                 'client_secret' => $paymentIntent->client_secret,
-                'status'        => 'success',
-                'message'       => 'Payment intent created successfully',
+                'status' => 'success',
+                'message' => 'Payment intent created successfully',
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
-                'status'  => 'error',
-                'message' => 'Stripe Error: ' . $e->getMessage()
+                'status' => 'error',
+                'message' => 'Stripe Error: '.$e->getMessage(),
             ], 500);
         }
     }
