@@ -11,7 +11,7 @@ class BloodRequestPost extends Model
     use HasFactory;
 
     protected $fillable = [
-        'blood_type',
+        'blood_type_id',
         'description',
         'location',
         'needed_by',
@@ -28,12 +28,7 @@ class BloodRequestPost extends Model
 
     protected $table = 'blood_request_posts';
 
-    // protected static function newFactory()
-    // {
-    //     return BloodREquestPostFactory::new();
-    // }
-// The person who wrote the post
-    public function author()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }

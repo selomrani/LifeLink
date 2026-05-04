@@ -1,0 +1,370 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.5.2 Chrome/142.0.7444.265 Electron/39.6.1 Safari/537.36" version="29.5.2">
+  <diagram name="Page-1" id="LifeLinkUseCaseFull">
+    <mxGraphModel dx="2696" dy="1840" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="980" pageHeight="1654" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- SYSTEM FRAME -->
+        <mxCell id="frame" parent="1" style="shape=umlFrame;whiteSpace=wrap;html=1;pointerEvents=0;recursiveResize=0;container=1;collapsible=0;width=160;" value="Life Link" vertex="1">
+          <mxGeometry height="1380" width="710" x="200" y="100" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== AUTH ===================== -->
+        <mxCell id="uc_login" parent="frame" style="shape=ellipse;html=1;strokeWidth=3;fontStyle=1;whiteSpace=wrap;align=center;perimeter=ellipsePerimeter;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" value="Login" vertex="1">
+          <mxGeometry height="40" width="120" x="290" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_signup" parent="frame" style="shape=ellipse;html=1;strokeWidth=3;fontStyle=1;whiteSpace=wrap;align=center;perimeter=ellipsePerimeter;" value="Sign Up" vertex="1">
+          <mxGeometry height="40" width="120" x="80" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_forgot" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Forgot Password" vertex="1">
+          <mxGeometry height="40" width="140" x="490" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_reset" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Reset Password" vertex="1">
+          <mxGeometry height="40" width="140" x="490" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_logout" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Logout" vertex="1">
+          <mxGeometry height="40" width="120" x="290" y="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_forgot_login" edge="1" parent="frame" source="uc_forgot" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_forgot" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="410" y="72" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== PROFILE ===================== -->
+        <mxCell id="uc_view_profile" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View My Profile" vertex="1">
+          <mxGeometry height="40" width="140" x="60" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_update_profile" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Update Profile" vertex="1">
+          <mxGeometry height="40" width="140" x="230" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_delete_account" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Delete Account" vertex="1">
+          <mxGeometry height="40" width="140" x="400" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_public" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View Public Profile" vertex="1">
+          <mxGeometry height="40" width="140" x="60" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_my_posts" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View My Posts" vertex="1">
+          <mxGeometry height="40" width="140" x="230" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_report_user" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Report a User" vertex="1">
+          <mxGeometry height="40" width="140" x="400" y="260" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_profile_login" edge="1" parent="frame" source="uc_view_profile" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_profile" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="170" y="155" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== ADMIN ===================== -->
+        <mxCell id="uc_statistics" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View Dashboard Statistics" vertex="1">
+          <mxGeometry height="50" width="155" x="490" y="155" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_ban" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Ban / Unban Users" vertex="1">
+          <mxGeometry height="45" width="140" x="500" y="260" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_review_report" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Review Reports" vertex="1">
+          <mxGeometry height="40" width="140" x="500" y="325" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_fetch_users" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View All Users" vertex="1">
+          <mxGeometry height="40" width="140" x="500" y="385" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_stats_login" edge="1" parent="frame" source="uc_statistics" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_stats" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;rotation=90;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="435" y="125" as="geometry" />
+        </mxCell>
+        <mxCell id="e_review_ban" edge="1" parent="frame" source="uc_review_report" target="uc_ban" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_review_ban" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="548" y="300" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== FEED ===================== -->
+        <mxCell id="uc_manage_requests" parent="frame" style="shape=ellipse;html=1;strokeWidth=3;fontStyle=1;whiteSpace=wrap;align=center;perimeter=ellipsePerimeter;" value="Manage Blood Requests" vertex="1">
+          <mxGeometry height="50" width="170" x="270" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_feed" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View Feed" vertex="1">
+          <mxGeometry height="40" width="120" x="60" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_filter_compat" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Filter Compatible Posts" vertex="1">
+          <mxGeometry height="40" width="150" x="60" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_create_req" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Create Request" vertex="1">
+          <mxGeometry height="40" width="120" x="200" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_edit_req" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Edit Request" vertex="1">
+          <mxGeometry height="40" width="120" x="340" y="540" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_close_req" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Close Request" vertex="1">
+          <mxGeometry height="40" width="120" x="480" y="540" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_filter_feed" edge="1" parent="frame" source="uc_filter_compat" target="uc_view_feed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;endArrow=open;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_filter" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;" value="&lt;&lt;extend&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="55" y="498" as="geometry" />
+        </mxCell>
+        <mxCell id="e_create_manage" edge="1" parent="frame" source="uc_create_req" target="uc_manage_requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_edit_manage" edge="1" parent="frame" source="uc_edit_req" target="uc_manage_requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_close_manage" edge="1" parent="frame" source="uc_close_req" target="uc_manage_requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_manage_login" edge="1" parent="frame" source="uc_manage_requests" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="lbl_manage_login" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;rotation=-75;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="335" y="300" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== COMMENTS ===================== -->
+        <mxCell id="uc_add_comment" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Add Comment" vertex="1">
+          <mxGeometry height="40" width="130" x="60" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_delete_comment" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Delete Comment" vertex="1">
+          <mxGeometry height="40" width="130" x="210" y="640" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== DONATIONS ===================== -->
+        <mxCell id="uc_view_donations" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View Donations History" vertex="1">
+          <mxGeometry height="40" width="160" x="60" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_offer_donation" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Offer Blood Donation" vertex="1">
+          <mxGeometry height="40" width="150" x="60" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_accept_donation" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Accept Donation" vertex="1">
+          <mxGeometry height="40" width="140" x="250" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_reject_donation" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Reject Donation" vertex="1">
+          <mxGeometry height="40" width="140" x="250" y="780" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_view_volunteers" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="View Volunteers" vertex="1">
+          <mxGeometry height="40" width="140" x="420" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_respond" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Respond to Request" vertex="1">
+          <mxGeometry height="40" width="140" x="420" y="780" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_offer_login" edge="1" parent="frame" source="uc_offer_donation" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_offer" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;rotation=-80;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="310" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="e_viewdon_login" edge="1" parent="frame" source="uc_view_donations" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="350" y="700" />
+            </Array>
+            <mxPoint x="350" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_viewdon" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;rotation=45;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="280" y="200" as="geometry" />
+        </mxCell>
+
+        <!-- ===================== MONETARY + AVAILABILITY + NOTIFICATIONS ===================== -->
+        <mxCell id="uc_monetary" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Make Monetary Donation" vertex="1">
+          <mxGeometry height="50" width="165" x="60" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_availability" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Manage Availability" vertex="1">
+          <mxGeometry height="40" width="140" x="420" y="880" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_notify" parent="frame" style="ellipse;whiteSpace=wrap;html=1;" value="Send Notifications to Compatible Donors" vertex="1">
+          <mxGeometry height="60" width="160" x="430" y="640" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e_avail_login" edge="1" parent="frame" source="uc_availability" target="uc_login" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;dashed=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="840" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lbl_avail" parent="frame" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=9;rotation=-80;" value="&lt;&lt;include&gt;&gt;" vertex="1">
+          <mxGeometry height="20" width="70" x="425" y="780" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================= -->
+        <!-- ACTORS -->
+        <!-- ======================================================= -->
+        <mxCell id="actor_guest" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="guest" vertex="1">
+          <mxGeometry height="60" width="30" x="110" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_user" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="user" vertex="1">
+          <mxGeometry height="60" width="30" x="30" y="530" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_donor" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="Donor" vertex="1">
+          <mxGeometry height="60" width="30" x="80" y="665" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_recipient" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="Recipient" vertex="1">
+          <mxGeometry height="60" width="30" x="100" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="Admin" vertex="1">
+          <mxGeometry height="60" width="30" x="110" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_system" parent="1" style="shape=umlActor;html=1;verticalLabelPosition=bottom;verticalAlign=top;align=center;" value="Internal System" vertex="1">
+          <mxGeometry height="60" width="30" x="960" y="665" as="geometry" />
+        </mxCell>
+
+        <!-- ======================================================= -->
+        <!-- ACTOR CONNECTIONS -->
+        <!-- ======================================================= -->
+
+        <!-- guest → sign up -->
+        <mxCell id="e_guest_signup" edge="1" parent="1" source="actor_guest" target="uc_signup" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- guest → login -->
+        <mxCell id="e_guest_login" edge="1" parent="1" source="actor_guest" target="uc_login" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.027;entryY=0.723;entryDx=0;entryDy=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- admin → user (generalization) -->
+        <mxCell id="e_admin_user" edge="1" parent="1" source="actor_admin" target="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- admin → statistics -->
+        <mxCell id="e_admin_stats" edge="1" parent="1" source="actor_admin" target="uc_statistics" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- admin → ban -->
+        <mxCell id="e_admin_ban" edge="1" parent="1" source="actor_admin" target="uc_ban" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="380" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- admin → review -->
+        <mxCell id="e_admin_review" edge="1" parent="1" source="actor_admin" target="uc_review_report" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- admin → view all users -->
+        <mxCell id="e_admin_allusers" edge="1" parent="1" source="actor_admin" target="uc_fetch_users" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <!-- user → profile -->
+        <mxCell id="e_user_profile" edge="1" parent="1" source="actor_user" target="uc_view_profile" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- user → feed -->
+        <mxCell id="e_user_feed" edge="1" parent="1" source="actor_user" target="uc_view_feed" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- user → add comment -->
+        <mxCell id="e_user_comment" edge="1" parent="1" source="actor_user" target="uc_add_comment" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- user → report -->
+        <mxCell id="e_user_report" edge="1" parent="1" source="actor_user" target="uc_report_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- donor → user (generalization) -->
+        <mxCell id="e_donor_user" edge="1" parent="1" source="actor_donor" target="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- donor → view donations -->
+        <mxCell id="e_donor_history" edge="1" parent="1" source="actor_donor" target="uc_view_donations" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="135" y="695" />
+              <mxPoint x="270" y="695" />
+              <mxPoint x="270" y="740" />
+              <mxPoint x="408" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- donor → offer donation -->
+        <mxCell id="e_donor_offer" edge="1" parent="1" source="actor_donor" target="uc_offer_donation" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;exitX=0.75;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="103" y="720" />
+              <mxPoint x="280" y="720" />
+              <mxPoint x="280" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- donor → compatible filter -->
+        <mxCell id="e_donor_compat" edge="1" parent="1" source="actor_donor" target="uc_filter_compat" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="135" y="695" />
+              <mxPoint x="270" y="695" />
+              <mxPoint x="270" y="460" />
+              <mxPoint x="408" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- donor → manage availability -->
+        <mxCell id="e_donor_avail" edge="1" parent="1" source="actor_donor" target="uc_availability" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=0.1;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- recipient → user (generalization) -->
+        <mxCell id="e_recip_user" edge="1" parent="1" source="actor_recipient" target="actor_user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- recipient → manage blood requests -->
+        <mxCell id="e_recip_manage" edge="1" parent="1" source="actor_recipient" target="uc_manage_requests" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- recipient → view volunteers -->
+        <mxCell id="e_recip_volunteers" edge="1" parent="1" source="actor_recipient" target="uc_view_volunteers" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;exitX=1;exitY=0.333;exitDx=0;exitDy=0;exitPerimeter=0;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="135" y="820" />
+              <mxPoint x="135" y="740" />
+              <mxPoint x="354" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <!-- recipient → availability -->
+        <mxCell id="e_recip_avail" edge="1" parent="1" source="actor_recipient" target="uc_availability" style="edgeStyle=entityRelationEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.252;entryY=1.061;entryDx=0;entryDy=0;entryPerimeter=0;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <!-- recipient → monetary donation -->
+        <mxCell id="e_recip_monetary" edge="1" parent="1" source="actor_recipient" target="uc_monetary" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;curved=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- internal system → notifications -->
+        <mxCell id="e_system_notify" edge="1" parent="1" source="actor_system" target="uc_notify" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

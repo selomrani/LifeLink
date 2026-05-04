@@ -3,34 +3,28 @@
 namespace App\Http\Controllers\Donations;
 
 use App\Http\Controllers\Controller;
+use App\Mail\MonetaryDonationConfirmationMail;
+use App\Mail\MonetaryDonationReceivedMail;
 use App\Models\BloodRequestPost;
+use App\Models\MonetaryDonation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Stripe\StripeClient;
 
 class StripeController extends Controller
 {
-    /**
-     * Handle the donation process.
-     * * @param Request $request
-     * @param BloodRequestPost $bloodrequest
-     * @return \Illuminate\Http\JsonResponse
-     */
     public function donate(Request $request, BloodRequestPost $bloodrequest)
     {
-        // 1. Validate the incoming amount
         $validated = $request->validate([
             'amount' => 'required|numeric|min:1',
         ]);
 
         try {
-            // 2. Initialize Stripe
             $stripe = new StripeClient(config('services.stripe.secret') ?? env('STRIPE_SECRET'));
 
-            // 3. Create the Payment Intent
-            // This creates a "pending" payment in Stripe's system
             $paymentIntent = $stripe->paymentIntents->create([
-                'amount' => $validated['amount'] * 100, // Stripe expects amounts in cents
+                'amount' => $validated['amount'] * 100,
                 'currency' => 'usd',
                 'payment_method_types' => ['card'],
                 'metadata' => [
@@ -39,26 +33,27 @@ class StripeController extends Controller
                 ],
             ]);
 
-            // 4. Save the record to your local database
-            // We use the relationship to ensure post_id is set correctly
-            $donation = $bloodrequest->donations()->create([
-                'amount'  => $validated['amount'],
+            $monetaryDonation = MonetaryDonation::create([
                 'user_id' => Auth::id(),
-                // 'post_id' is automatically handled by the relationship helper
+                'amount' => $validated['amount'],
+                'post_id' => $bloodrequest->id,
             ]);
 
-            // 5. Return the client_secret to Vue
+            $bloodrequest->load('user');
+            $donor = Auth::user();
+            Mail::to($donor->email)->send(new MonetaryDonationConfirmationMail($donor, $monetaryDonation));
+            Mail::to($bloodrequest->user->email)->send(new MonetaryDonationReceivedMail($bloodrequest->user, $monetaryDonation));
+
             return response()->json([
                 'client_secret' => $paymentIntent->client_secret,
-                'donation'      => $donation,
-                'status'        => 'success',
-                'message'       => 'Payment intent created successfully',
+                'status' => 'success',
+                'message' => 'Payment intent created successfully',
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
-                'status'  => 'error',
-                'message' => 'Stripe Error: ' . $e->getMessage()
+                'status' => 'error',
+                'message' => 'Stripe Error: ' . $e->getMessage(),
             ], 500);
         }
     }

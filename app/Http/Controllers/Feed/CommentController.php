@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Feed; // Fixed: Added \Feed
 
-use App\Http\Controllers\Controller; // Added: Required to extend the base Controller
-use App\Http\Requests\BloodPostRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\CommentRequest;
+use App\Mail\NewCommentMail;
 use App\Models\BloodRequestPost;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
@@ -18,6 +19,12 @@ class CommentController extends Controller
         $validated['post_id'] = $post->id;
 
         $comment = Comment::create($validated);
+        $comment->load('user');
+
+        $post->load('user');
+        if ($post->user_id !== Auth::id()) {
+            Mail::to($post->user->email)->send(new NewCommentMail($post->user, $comment, $post));
+        }
 
         return response()->json([
             'status' => 'success',

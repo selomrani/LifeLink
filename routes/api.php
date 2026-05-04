@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\Feed\CommentController; // This is the correct Feed ver
 use App\Http\Controllers\Profile\UserProfileController;
 use App\Models\Donation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Stripe\Stripe;
 
@@ -28,6 +30,13 @@ Route::post('/reset-password', ResetPasswordController::class);
 
 Route::get('/bloodtypes', [BloodTypeController::class, 'index']);
 
+Route::post('/chat', function (Request $request) {
+    $response = Http::withHeaders([
+        'X-Instance-Id' => env('N8N_INSTANCE_ID', 'eb4c3eff25260772290dd9dba208402d6cdf318abf70f3ed6bbcd0b28f503571'),
+    ])->post(env('N8N_CHAT_URL', 'http://44.211.166.212:5678/webhook/5bda5947-a4b4-4ae9-a097-5b42279422e6/chat'), $request->all());
+
+    return $response->json();
+});
 
 Route::middleware('auth:sanctum')->group(function () {
 
@@ -43,26 +52,40 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/', [UserProfileController::class, 'update']);
         Route::delete('/', [UserProfileController::class, 'destroy']);
     });
-
+    Route::get('/users/{user}', [UserProfileController::class, 'viewPublicProfile']);
+    Route::get('/profile/posts', [UserProfileController::class, 'userPosts']);
 
     Route::get('/feed', [BloodRequestController::class, 'index']);
     Route::post('/feed', [BloodRequestController::class, 'store']);
     Route::get('/feed/{bloodrequest}', [BloodRequestController::class, 'show']);
-    Route::put('/feed/{id}', [BloodRequestController::class, 'update']);
-    Route::delete('/feed/{id}', [BloodRequestController::class, 'destroy']);
+    Route::put('/feed/{bloodrequest}', [BloodRequestController::class, 'update']);
+    Route::delete('/feed/{bloodrequest}', [BloodRequestController::class, 'destroy']);
+    Route::put('/feed/{bloodrequest}/close', [BloodRequestController::class, 'close']);
 
     Route::post('/feed/{post}/comment', [CommentController::class, 'create']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
     Route::post('/feed/{bloodrequest}/donate', [StripeController::class, 'donate']);
 
 
     // donations
 
-    Route::post('/feed/{post}/donate', [DonationsController::class, 'offerDonation']);
-    Route::put('feed/{post}/donations/accept', [DonationsController::class, 'acceptDonation']);
-    Route::put('feed/{post}/donations/reject', [DonationsController::class, 'rejectDonation']);
-    Route::get('/donations', [DonationsController::class, 'myDonations']);
+// donations
+    Route::post('/post/{post}/donate', [DonationsController::class, 'offerDonation']);
+    Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);
+    Route::get('/profile/donations', [DonationsController::class, 'myDonations']);
     Route::get('/donations/{donation}', [DonationsController::class, 'donationDetails']);
     Route::delete('/donations/{donation}', [DonationsController::class, 'deleteDonation']);
+    Route::put('/donations/{donation}/accept', [DonationsController::class, 'acceptDonation']);
+    Route::put('/donations/{donation}/reject', [DonationsController::class, 'rejectDonation']);
+    // report
+    Route::post('/users/{user}/report',[UserProfileController::class,'report']);
+
+    // Admin actions
+
+    Route::get('statistics',[AdminController::class,'statistics']);
+    Route::get('users',[AdminController::class,'fetchUsers']);
+    Route::put('users/{user}/ban',[AdminController::class,'ban']);
+    Route::put('users/{user}/toggle-ban',[AdminController::class,'toggleBan']);
+    Route::put('reports/{report}/review',[AdminController::class,'review']);
 });
 
-Route::get('/post/{post}/donations', [DonationsController::class, 'postDonationsIndex']);

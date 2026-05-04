@@ -32,6 +32,7 @@ class User extends Authenticatable
 
     protected $appends = [
         'profile_photo_url',
+        'can_donate',
     ];
 
     protected function casts(): array
@@ -70,8 +71,22 @@ class User extends Authenticatable
     {
         return $this->hasMany(Donation::class, 'donor_id');
     }
+
+
     public function bloodRequestPosts()
     {
         return $this->hasMany(BloodRequestPost::class);
+    }
+    public function medicalCoolDown(){
+        $lastDonation = $this->donations()->where('status', 'accepted')->latest()->first();
+        if ($lastDonation) {
+            return $lastDonation->created_at->addDays(56);
+        }
+        return null;
+    }
+
+    public function getCanDonateAttribute(){
+        $cooldown = $this->medicalCoolDown();
+        return $cooldown === null || $cooldown <= now();
     }
 }
